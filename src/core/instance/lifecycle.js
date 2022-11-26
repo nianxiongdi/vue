@@ -164,6 +164,7 @@ export function mountComponent (
       }
     }
   }
+  // 1. beforeMount
   callHook(vm, 'beforeMount')
 
   let updateComponent
@@ -181,12 +182,13 @@ export function mountComponent (
       measure(`vue ${name} render`, startTag, endTag)
 
       mark(startTag)
-      vm._update(vnode, hydrating)
+      vm._update(vnode, hydrating)  
       mark(endTag)
       measure(`vue ${name} patch`, startTag, endTag)
     }
   } else {
     updateComponent = () => {
+      // 最终挂载展示dom方法，先执行 _render生存vnode ，然后_update挂载
       vm._update(vm._render(), hydrating)
     }
   }
@@ -194,6 +196,7 @@ export function mountComponent (
   // we set this to vm._watcher inside the watcher's constructor
   // since the watcher's initial patch may call $forceUpdate (e.g. inside child
   // component's mounted hook), which relies on vm._watcher being already defined
+  // 渲染watch
   new Watcher(vm, updateComponent, noop, {
     before () {
       if (vm._isMounted && !vm._isDestroyed) {

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Vue.js tree view example</title>
+ 
+    </style>
+    <!-- Delete ".min" for console warnings in development -->
+    <script src="../../dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">  
+      <mpx-navagator>11</mpx-navagator>
+        {{ message }}
+    </div>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+              message: 'this is info.'
+            },
+            mounted () {
+            }
+        })
+    </script>
+    
+  </body>
+</html>

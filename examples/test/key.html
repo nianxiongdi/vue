@@ -11,15 +11,46 @@
   <body>
     <div id="app">  
         <p v-for="item in items" >{{item}}</p>
+        {{obj}}
+        <button @click="onChange">change</button>
     </div>
     <script>
         const app = new Vue({
             el: "#app",
-            data: {items: ['a', 'b', 'c', 'd', 'e']},
+            data: {
+              items: ['a', 'b', 'c', 'd', 'e'],
+              text: 'this is des.',
+              obj: {
+                name: 123
+              }
+            },
+            methods: {
+              onChange() {
+                // this.items[0] = 1 err
+                // this.obj.a = 123 err
+
+                // this.items.splice(0,1)
+                // this.$nextTick(() => {
+                //   console.log(this.text)
+                // })
+                // this.text = '123'
+                // this.$nextTick().then(()=> {
+                //   console.log(this.text)
+                // })
+              }
+            },
             mounted () {
-                setTimeout(()=>{
-                    this.items.splice(2, 0, 'f')
-                }, 2000)
+                // setTimeout(()=>{
+                //     this.items.splice(2, 0, 'f')
+                // }, 2000)
+                // this.$nextTick(() => {
+                //   console.log(this.text)
+                // })
+                // this.text = '123'
+                // this.$nextTick(() => {
+                //   console.log(this.text)
+                // })
+
             }
         })
         console.log(app.$options.render)

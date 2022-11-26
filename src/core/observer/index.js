@@ -46,6 +46,8 @@ export class Observer {
     def(value, '__ob__', this)
     if (Array.isArray(value)) {
       if (hasProto) {
+        // 原型
+        // [1,2].__proto__ = Array.prototype
         protoAugment(value, arrayMethods)
       } else {
         copyAugment(value, arrayMethods, arrayKeys)
@@ -115,7 +117,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
   if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
     ob = value.__ob__
   } else if (
-    shouldObserve &&
+    shouldObserve && // 
     !isServerRendering() &&
     (Array.isArray(value) || isPlainObject(value)) &&
     Object.isExtensible(value) &&
@@ -159,10 +161,12 @@ export function defineReactive (
     configurable: true,
     get: function reactiveGetter () {
       const value = getter ? getter.call(obj) : val
+      debugger
+      // 依赖收集
       if (Dep.target) {
         dep.depend()
         if (childOb) {
-          childOb.dep.depend()
+          childOb.dep.depend() // ?
           if (Array.isArray(value)) {
             dependArray(value)
           }

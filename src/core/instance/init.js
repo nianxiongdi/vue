@@ -49,7 +49,9 @@ export function initMixin (Vue: Class<Component>) {
     }
     // expose real self
     vm._self = vm
+    // 生命周期
     initLifecycle(vm)
+    // 事件中心
     initEvents(vm)
     initRender(vm)
     callHook(vm, 'beforeCreate')
@@ -66,6 +68,7 @@ export function initMixin (Vue: Class<Component>) {
     }
 
     if (vm.$options.el) {
+      // 挂载data数据
       vm.$mount(vm.$options.el)
     }
   }

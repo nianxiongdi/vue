@@ -12,7 +12,7 @@ import {
 
 export const MAX_UPDATE_COUNT = 100
 
-const queue: Array<Watcher> = []
+const queue: Array<Watcher> = [] // 
 const activatedChildren: Array<Component> = []
 let has: { [key: number]: ?true } = {}
 let circular: { [key: number]: number } = {}
@@ -42,9 +42,9 @@ function flushSchedulerQueue () {
   // Sort queue before flush.
   // This ensures that:
   // 1. Components are updated from parent to child. (because parent is always
-  //    created before the child)
+  //    created before the child) 组件更新从父到子
   // 2. A component's user watchers are run before its render watcher (because
-  //    user watchers are created before the render watcher)
+  //    user watchers are created before the render watcher)  用户定义watcher
   // 3. If a component is destroyed during a parent component's watcher run,
   //    its watchers can be skipped.
   queue.sort((a, b) => a.id - b.id)
@@ -144,7 +144,7 @@ export function queueWatcher (watcher: Watcher) {
     }
     // queue the flush
     if (!waiting) {
-      waiting = true
+      waiting = true // lock
 
       if (process.env.NODE_ENV !== 'production' && !config.async) {
         flushSchedulerQueue()

@@ -34,8 +34,13 @@ const sharedPropertyDefinition = {
   get: noop,
   set: noop
 }
-
+/**
+ * proxy data
+ * sourceKey _data
+ * key  data中的key
+*/
 export function proxy (target: Object, sourceKey: string, key: string) {
+  // this.data  --> this._data.messgae
   sharedPropertyDefinition.get = function proxyGetter () {
     return this[sourceKey][key]
   }
@@ -53,6 +58,7 @@ export function initState (vm: Component) {
   if (opts.data) {
     initData(vm)
   } else {
+    debugger
     observe(vm._data = {}, true /* asRootData */)
   }
   if (opts.computed) initComputed(vm, opts.computed)
@@ -111,6 +117,8 @@ function initProps (vm: Component, propsOptions: Object) {
 
 function initData (vm: Component) {
   let data = vm.$options.data
+  // 1. data(){ return {} } 
+  // 2. data{}
   data = vm._data = typeof data === 'function'
     ? getData(data, vm)
     : data || {}
@@ -147,7 +155,8 @@ function initData (vm: Component) {
       proxy(vm, `_data`, key)
     }
   }
-  // observe data
+  debugger
+  // 观测 data
   observe(data, true /* asRootData */)
 }
 
@@ -174,6 +183,7 @@ function initComputed (vm: Component, computed: Object) {
 
   for (const key in computed) {
     const userDef = computed[key]
+    // 函数或对象都可以
     const getter = typeof userDef === 'function' ? userDef : userDef.get
     if (process.env.NODE_ENV !== 'production' && getter == null) {
       warn(
@@ -184,6 +194,7 @@ function initComputed (vm: Component, computed: Object) {
 
     if (!isSSR) {
       // create internal watcher for the computed property.
+      // computed用Watcher实现
       watchers[key] = new Watcher(
         vm,
         getter || noop,
@@ -215,7 +226,7 @@ export function defineComputed (
   const shouldCache = !isServerRendering()
   if (typeof userDef === 'function') {
     sharedPropertyDefinition.get = shouldCache
-      ? createComputedGetter(key)
+      ? createComputedGetter(key) // 浏览器
       : createGetterInvoker(userDef)
     sharedPropertyDefinition.set = noop
   } else {

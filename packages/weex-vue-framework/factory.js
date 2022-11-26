@@ -3463,6 +3463,7 @@ function defineComputed (
   key,
   userDef
 ) {
+  debugger
   var shouldCache = !isServerRendering();
   if (typeof userDef === 'function') {
     sharedPropertyDefinition.get = shouldCache

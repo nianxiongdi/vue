@@ -47,7 +47,7 @@ export default class Watcher {
     expOrFn: string | Function,
     cb: Function,
     options?: ?Object,
-    isRenderWatcher?: boolean
+    isRenderWatcher?: boolean //是否为渲染watch
   ) {
     this.vm = vm
     if (isRenderWatcher) {
@@ -77,6 +77,7 @@ export default class Watcher {
       : ''
     // parse expression for getter
     if (typeof expOrFn === 'function') {
+      // 若为computed 这里为getger
       this.getter = expOrFn
     } else {
       this.getter = parsePath(expOrFn)
@@ -90,7 +91,7 @@ export default class Watcher {
         )
       }
     }
-    this.value = this.lazy
+    this.value = this.lazy // computed 首次为undefined. 不会立马求值
       ? undefined
       : this.get()
   }
@@ -102,6 +103,7 @@ export default class Watcher {
     pushTarget(this)
     let value
     const vm = this.vm
+    debugger
     try {
       value = this.getter.call(vm, vm)
     } catch (e) {
@@ -148,6 +150,7 @@ export default class Watcher {
       }
     }
     let tmp = this.depIds
+    // 保留之前的
     this.depIds = this.newDepIds
     this.newDepIds = tmp
     this.newDepIds.clear()
