@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Vue.js modal component example</title>
+    <!-- Delete ".min" for console warnings in development -->
+    <script src="../../dist/vue.js"></script>
+  </head>
+  <body>
+ 
+    <!-- app -->
+    <div id="app">
+     {{ msg }}
+      {{ b }}
+     {{ msg }}
+     {{ b }}
+    </div>
+
+    <script>
+
+      // start app
+      new Vue({
+        el: '#app',
+        data: {
+          msg: 'hello',
+          b: 'b',
+          obj: {
+            name: 1,
+            age: 2
+          }
+        },
+        watch:{
+          obj(val, oldVal) {
+            console.log(">>> val, oldVal", val, oldVal);
+          }
+        },
+        mounted() {
+          setTimeout(() => {
+            this.obj = {}
+          }, 2000);
+        }
+      })
+    </script>
+  </body>
+</html>

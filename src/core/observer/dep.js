@@ -22,6 +22,7 @@ export default class Dep {
   }
 
   addSub (sub: Watcher) {
+    debugger
     this.subs.push(sub)
   }
 
@@ -30,6 +31,7 @@ export default class Dep {
   }
 
   depend () {
+    debugger
     if (Dep.target) {
       Dep.target.addDep(this)
     }

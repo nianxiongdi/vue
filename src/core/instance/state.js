@@ -143,8 +143,8 @@ function initData (vm: Component) {
           `Method "${key}" has already been defined as a data property.`,
           vm
         )
-      }
-    }
+      } 
+    }   
     if (props && hasOwn(props, key)) {
       process.env.NODE_ENV !== 'production' && warn(
         `The data property "${key}" is already declared as a prop. ` +
